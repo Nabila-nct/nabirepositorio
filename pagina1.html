@@ -4,55 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina uno</title>
+    <link rel="stylesheet" href="postresstyle.css">
 </head>
 <body>
-    <center>
-        <img src="tarta-de-manzana.jpg" alt="tartamanzana" width="300" height="200">
-    </center>
+    <div class="imagen-main">
+        <img src="tarta-de-manzana.jpg" alt="tartamanzana">
+    </div>
+       
+   
     
-    <h1>Recetas de Postres</h1>
+    <h1 id="main-title">Recetas de Postres</h1>
 
-<h2 id="menu">Menú de Recetas de Postres</h2>
+<div class="intro">
+    <p>Bienvenido a nuestra página de recetas de postres. Aquí encontrarás deliciosas recetas fáciles de preparar para endulzar tu día. Explora nuestras opciones y disfruta de la magia de la repostería.
+    </p>
+</div>    
     
-<p>Bienvenido a nuestra página de recetas de postres. Aquí encontrarás deliciosas recetas fáciles de preparar para endulzar tu día. Explora nuestras opciones y disfruta de la magia de la repostería.
-</p>    
 
-<ul>
+<ul class="nav">
 <li><a href="#manzana">Postre de Manzana</a></li>
 <li><a href="#chocolate">Pastel de Chocolate</a></li>
 <li><a href="#fresa">Tarta de Fresas</a></li>
 </ul>
 
+<div class="postre-manzana">
+    <h3 id="manzana">Postre de Manzana</h3>
+    <p>El postre de manzana es una opción clásica y deliciosa, ideal para cualquier ocasión. Su combinación de dulzura y acidez lo convierte en un favorito de todos.
+    </p>
+    
+    <h4>Ingredientes:</h4>
+    <ul>
+    <li>4 manzanas</li>
+    <li>100g de azúcar</li>
+    <li>1 cucharadita de canela</li>
+    <li>50g de mantequilla</li>
+    <li>1 masa de hojaldre</li>
+    <li>1 huevo batido (para dorar)</li>
+    </ul>
+    
+    
+    <h4>Preparación:</h4>
+    <ol>
+       <li>Pelar y cortar las manzanas en rodajas finas.</li> 
+        <li>En un bol, mezclar las manzanas con el azúcar y la canela.</li>
+        <li>Extender la masa de hojaldre sobre una bandeja de horno.</li>
+        <li>Colocar la mezcla de manzana sobre la masa.</li>
+        <li>Doblar los bordes y pincelar con el huevo batido.</li>
+        <li>Hornear a 180°C durante 25-30 minutos.</li>
+        <li>Servir caliente y disfrutar.</li>
+    </ol>
+</div>
 
-<h3 id="manzana">Postre de Manzana</h3>
-<p>El postre de manzana es una opción clásica y deliciosa, ideal para cualquier ocasión. Su combinación de dulzura y acidez lo convierte en un favorito de todos.
-</p>
-
-<h4>Ingredientes:</h4>
-<ul>
-<li>4 manzanas</li>
-<li>100g de azúcar</li>
-<li>1 cucharadita de canela</li>
-<li>50g de mantequilla</li>
-<li>1 masa de hojaldre</li>
-<li>1 huevo batido (para dorar)</li>
-</ul>
-
-
-<h4>Preparación:</h4>
-<ol>
-   <li>Pelar y cortar las manzanas en rodajas finas.</li> 
-    <li>En un bol, mezclar las manzanas con el azúcar y la canela.</li>
-    <li>Extender la masa de hojaldre sobre una bandeja de horno.</li>
-    <li>Colocar la mezcla de manzana sobre la masa.</li>
-    <li>Doblar los bordes y pincelar con el huevo batido.</li>
-    <li>Hornear a 180°C durante 25-30 minutos.</li>
-    <li>Servir caliente y disfrutar.</li>
-</ol>
 
 <p><a href="#menu">Regresar al menu</a></p>
 
-    
+    <div class="postre-chocolate">
 <h3 id="chocolate">Pastel de Chocolate</h3>
 <p>El pastel de chocolate es un postre irresistible para los amantes del cacao. Su textura esponjosa y su sabor intenso hacen que sea un placer para el paladar.</p>
 
@@ -75,8 +81,11 @@
     <li>Dejar enfriar y servir.</li>
 </ol>
 
+    </div>
+
 <p><a href="#menu">Regresar al menu</a></p>
     
+    <div class="postre-fresa">
 <h3 id="fresa">Tarta de Fresas</h3>
 <p>La tarta de fresas es un postre fresco y ligero, perfecto para los días cálidos. Su combinación de fresas y crema la convierte en una opción deliciosa y elegante.</p>
 
@@ -101,6 +110,7 @@
     <li>Preparar la gelatina según instrucciones y verter sobre las fresas.</li>
     <li>Refrigerar por 2 horas antes de servir.</li>
 </ol>
+    </div>
 
 <p><a href="#menu">Regresar al menu</a></p>
 
