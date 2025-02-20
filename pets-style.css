@@ -1,0 +1,49 @@
+html{
+    background-color: #B3C8CF;
+}
+h1{
+    text-align: center;
+    color: #640D5F;
+    font-size: 40px;
+    margin-top: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#main-image{
+    width: 600px;
+   margin-left: 25%;
+   border-radius: 5px;
+}
+
+h2{
+    color: #D91656;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.imagenes-pets > img{
+    display: inline-flex;
+    justify-content: flex-start;
+    border-radius: 5px;
+}
+
+th, td{
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+tr:nth-child(even){
+    background-color: purple;
+}
+
+tr:nth-child(odd){
+    background-color: pink;
+}
+
+tr:hover{
+    background-color: yellow;
+}
+
+table{
+    width:50%;
+}
