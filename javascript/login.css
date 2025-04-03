@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* Aqua marine background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #ffffff; /* White background for the form */
+    border: 2px solid #4dd0e1; /* Aqua marine border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px 30px;
+    width: 300px;
+    text-align: center;
+}
+
+h1 {
+    color: #00796b; /* Dark aqua marine for the title */
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: #004d40; /* Darker aqua marine for labels */
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4dd0e1; /* Aqua marine border */
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #e0f7fa; /* Light aqua marine background */
+    color: #004d40; /* Darker text */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #00796b; /* Dark aqua marine on focus */
+    box-shadow: 0 0 5px #4dd0e1;
+}
+
+button.submit-btn {
+    background-color: #4dd0e1; /* Aqua marine button */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+button.submit-btn:hover {
+    background-color: #00796b; /* Darker aqua marine on hover */
+}
+
+button.submit-btn:active {
+    background-color: #004d40; /* Even darker on click */
+}
