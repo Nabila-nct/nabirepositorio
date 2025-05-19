@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pagar con Stripe</title>
+</head>
+<body>
+  <h2>Pagar con Stripe</h2>
+  <form id="payment-form">
+    <label for="amount">Cantidad (MXN):</label>
+    <input type="number" id="amount" name="amount" required min="1" />
+    <button type="submit">Pagar</button>
+  </form>
+
+  <script>
+    const form = document.getElementById("payment-form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const amount = document.getElementById("amount").value;
+      const response = await fetch("/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount }),
+      });
+      const data = await response.json();
+      window.location.href = data.url;
+    });
+  </script>
+</body>
+</html>
