@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Automóvil</title>
+      
+</head>
+<body>
+    <h1>Eliminar Automóvil</h1>
+    
+    <form id="formEliminar">
+        <p class="warning">¡Atención! Esta acción no se puede deshacer.</p>
+        
+        <label for="id">ID del Automóvil a Eliminar:</label>
+        <input type="text" name="id" id="id" required>
+
+        <input type="submit" value="Eliminar Automóvil">
+    </form>
+    
+    <a href="/reto_CRUD_NLV/public/home.html">Volver al Menú Principal</a>
+    
+    <script>
+        // Verificar si hay un ID en la URL (para eliminación directa desde la lista)
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                document.getElementById('id').value = id;
+            }
+        };
+        
+        // Manejar el envío del formulario
+        document.getElementById('formEliminar').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Confirmar la eliminación
+            if (confirm('¿Estás seguro de que deseas eliminar este automóvil? Esta acción no se puede deshacer.')) {
+                // Obtener el ID del formulario
+                const formData = {
+                    id: document.getElementById('id').value
+                };
+                
+                // Enviar los datos al servidor
+                fetch('/eliminar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Redireccionar a la página principal
+                    window.location.href = '/home';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al eliminar automóvil: ' + error.message);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

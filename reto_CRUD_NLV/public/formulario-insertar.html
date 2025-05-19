@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insertar Automóvil</title>
+    
+</head>
+<body>
+    <h1>Insertar Nuevo Automóvil</h1>
+
+    <form id="formInsertar">
+        <label for="id">ID:</label>
+        <input type="text" name="id" id="id" required>
+        
+        <label for="marca">Marca:</label>
+        <input type="text" name="marca" id="marca" required>
+        
+        <label for="modelo">Modelo:</label>
+        <input type="text" name="modelo" id="modelo" required>
+        
+        <label for="placa">Placa:</label>
+        <input type="text" name="placa" id="placa" required>
+        
+        <label for="color">Color:</label>
+        <input type="color" name="color" id="color" required>
+        
+        <label for="anio">Año:</label>
+        <input type="number" name="anio" id="anio" min="1900" max="2025" required>
+
+        <input type="submit" value="Insertar Automóvil">
+    </form>
+    
+    <a href="/reto_CRUD_NLV/public/home.html">Volver al Menú Principal</a>
+    
+    <script>
+        // Manejar el envío del formulario
+        document.getElementById('formInsertar').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Obtener los valores del formulario
+            const formData = {
+                id: document.getElementById('id').value,
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value,
+                placa: document.getElementById('placa').value,
+                color: document.getElementById('color').value,
+                anio: document.getElementById('anio').value
+            };
+            
+            // Enviar los datos al servidor
+            fetch('/insertar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.text();
+            })
+            .then(data => {
+                // Redireccionar a la página principal
+                window.location.href = '/home';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al insertar automóvil: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>

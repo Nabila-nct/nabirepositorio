@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongodb": "^6.16.0",
+     "start": "node servidor.js",
+     "dev": "nodemon servidor.js"
+   }
+  }
+
+
+

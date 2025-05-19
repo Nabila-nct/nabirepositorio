@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto CRUD</title>
+    
+</head>
+<body>
+    <h1>Reto CRUD - Gestión de Automóviles</h1>
+
+    <form id="crudForm">
+        <label for="id">ID:</label>
+        <input type="text" name="id" id="id" required>
+        
+        <label for="marca">Marca:</label>
+        <input type="text" name="marca" id="marca">
+
+        <label for="modelo">Modelo:</label>
+        <input type="text" name="modelo" id="modelo">
+        
+        <label for="placa">Placa:</label>
+        <input type="text" name="placa" id="placa">
+        
+        <label for="color">Color:</label>
+        <input type="color" name="color" id="color">
+        
+        <label for="anio">Año:</label>
+        <input type="number" name="anio" id="anio" min="1900" max="2025">
+
+        <div class="botones">
+            <button type="button" id="insertarBtn">Insertar</button>
+            <button type="button" id="actualizarBtn">Actualizar</button>
+            <button type="button" id="recuperarBtn">Recuperar</button>
+            <button type="button" id="eliminarBtn">Eliminar</button>
+        </div>
+    </form>
+    
+    <div id="resultadoContainer"></div>
+    
+    <a href="/home">Volver al Menú Principal</a>
+
+    <script>
+        // Mostrar el contenedor de resultados si es necesario
+        const resultadoContainer = document.getElementById('resultadoContainer');
+        
+        // Función para insertar un automóvil
+        document.getElementById('insertarBtn').addEventListener('click', function() {
+            // Validar que todos los campos están completos
+            if (!validarCampos(['id', 'marca', 'modelo', 'placa', 'color', 'anio'])) {
+                alert('Por favor completa todos los campos para insertar un automóvil');
+                return;
+            }
+            
+            // Obtener valores del formulario
+            const formData = {
+                id: document.getElementById('id').value,
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value,
+                placa: document.getElementById('placa').value,
+                color: document.getElementById('color').value,
+                anio: document.getElementById('anio').value
+            };
+            
+            // Enviar datos al servidor
+            fetch('/insertar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.text();
+            })
+            .then(data => {
+                // El servidor maneja la redirección con un alert
+                document.body.innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al insertar automóvil: ' + error.message);
+            });
+        });
+        
+        // Función para actualizar un automóvil
+        document.getElementById('actualizarBtn').addEventListener('click', function() {
+            // Validar que ID y color estén presentes
+            if (!validarCampos(['id', 'color'])) {
+                alert('Por favor ingresa el ID y selecciona un color para actualizar');
+                return;
+            }
+            
+            // Obtener valores del formulario
+            const formData = {
+                id: document.getElementById('id').value,
+                color: document.getElementById('color').value
+            };
+            
+            // Enviar datos al servidor
+            fetch('/actualizar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.text();
+            })
+            .then(data => {
+                // El servidor maneja la redirección con un alert
+                document.body.innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al actualizar automóvil: ' + error.message);
+            });
+        });
+        
+        // Función para recuperar automóviles
+        document.getElementById('recuperarBtn').addEventListener('click', function() {
+            // Mostrar mensaje de carga
+            resultadoContainer.style.display = 'block';
+            resultadoContainer.innerHTML = '<p>Cargando datos...</p>';
+            
+            // Obtener datos del servidor
+            fetch('/recuperar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.length === 0) {
+                    resultadoContainer.innerHTML = '<p>No hay automóviles registrados en la base de datos.</p>';
+                    return;
+                }
+                
+                // Crear tabla con los datos
+                let tableHTML = '<h2>Automóviles Registrados</h2>';
+                tableHTML += '<table>';
+                tableHTML += '<tr><th>ID</th><th>Marca</th><th>Modelo</th><th>Placa</th><th>Color</th><th>Año</th><th>Acciones</th></tr>';
+                
+                data.forEach(auto => {
+                    tableHTML += `<tr>
+                        <td>${auto.id || ''}</td>
+                        <td>${auto.marca || ''}</td>
+                        <td>${auto.modelo || ''}</td>
+                        <td>${auto.placa || ''}</td>
+                        <td><span class="color-muestra" style="background-color:${auto.color || '#000000'}"></span> ${auto.color || ''}</td>
+                        <td>${auto.anio || ''}</td>
+                        <td>
+                            <button onclick="cargarDatos('${auto.id}', '${auto.color}')">Editar</button>
+                            <button onclick="eliminarAuto('${auto.id}')">Eliminar</button>
+                        </td>
+                    </tr>`;
+                });
+                
+                tableHTML += '</table>';
+                resultadoContainer.innerHTML = tableHTML;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultadoContainer.innerHTML = '<p>Error al recuperar los datos: ' + error.message + '</p>';
+            });
+        });
+        
+        // Función para eliminar un automóvil
+        document.getElementById('eliminarBtn').addEventListener('click', function() {
+            // Validar que el ID está presente
+            if (!validarCampos(['id'])) {
+                alert('Por favor ingresa el ID del automóvil que deseas eliminar');
+                return;
+            }
+            
+            eliminarAuto(document.getElementById('id').value);
+        });
+        
+        // Función para eliminar un automóvil desde la tabla
+        function eliminarAuto(id) {
+            // Confirmar eliminación
+            if (confirm('¿Estás seguro de que deseas eliminar este automóvil? Esta acción no se puede deshacer.')) {
+                // Obtener valores del formulario
+                const formData = {
+                    id: id
+                };
+                
+                // Enviar datos al servidor
+                fetch('/eliminar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // El servidor maneja la redirección con un alert
+                    document.body.innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al eliminar automóvil: ' + error.message);
+                });
+            }
+        }
+        
+        // Función para cargar datos de un auto en el formulario
+        function cargarDatos(id, color) {
+            document.getElementById('id').value = id;
+            document.getElementById('color').value = color;
+            
+            // Opcional: hacer scroll hasta el formulario
+            document.getElementById('crudForm').scrollIntoView();
+        }
+        
+        // Función para validar campos
+        function validarCampos(campos) {
+            for (let campo of campos) {
+                const elemento = document.getElementById(campo);
+                if (!elemento.value) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
